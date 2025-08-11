@@ -79,6 +79,28 @@
       .viewport { inset: 56px 0 0 0; }
     }
 
+.hero-uniq--split {
+  display: grid;
+  gap: 28px;
+  align-items: center;
+}
+
+@media (min-width: 900px) {
+  .hero-uniq--split {
+    grid-template-columns: 1.1fr 0.9fr; /* lijevo tekst, desno animacija */
+  }
+}
+
+.hero-animation {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hero-animation dotlottie-wc {
+  max-width: 100%;
+  height: auto;
+}
 
 
 .slide--a {

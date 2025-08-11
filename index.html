@@ -7,6 +7,10 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
+    <script
+  src="https://unpkg.com/@lottiefiles/dotlottie-wc@0.6.2/dist/dotlottie-wc.js"
+  type="module"
+></script>
 </head>
 <body>  
 
@@ -42,31 +46,42 @@
   <main class="viewport" id="viewport">
     <div class="slides" id="slides">
 
-
 <section class="slide slide--a" data-index="0" aria-label="Studio Uniq — Početna">
-  <div class="slide-inner hero-uniq">
-    <span class="hero-eyebrow">Studio Uniq</span>
-    <h1 class="title">Dizajn interijera koji živi s vama</h1>
-    <p class="lead">
-      Kreiramo funkcionalne, tople prostore — od ideje do izvedbe. 
-      Materijali, svjetlo i proporcije u ravnoteži s vašim navikama.
-    </p>
+  <div class="slide-inner hero-uniq hero-uniq--split">
 
-    <div class="hero-cta">
-      <a class="btn" href="#" data-target="3">Pogledaj projekte</a>
-      <a class="btn btn--ghost" href="#" data-target="4">Zatraži konzultacije</a>
+    <div class="hero-text">
+      <span class="hero-eyebrow">Studio Uniq</span>
+      <h1 class="title">Dizajn interijera koji živi s vama</h1>
+      <p class="lead">
+        Kreiramo funkcionalne, tople prostore — od ideje do izvedbe. 
+        Materijali, svjetlo i proporcije u ravnoteži s vašim navikama.
+      </p>
+
+      <div class="hero-cta">
+        <a class="btn" href="#" data-target="3">Pogledaj projekte</a>
+        <a class="btn btn--ghost" href="#" data-target="4">Zatraži konzultacije</a>
+      </div>
+
+      <div class="scroll-cue" aria-hidden="true">
+        <span>scrollaj desno</span>
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M8 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
     </div>
 
-    <!-- (opcionalno) scroll hint -->
-    <div class="scroll-cue" aria-hidden="true">
-      <span>scrollaj desno</span>
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-        <path d="M8 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
+    <div class="hero-animation">
+      <dotlottie-wc
+        src="https://lottie.host/104a5c2c-2168-4cb1-9e7a-58bb65c8e3f1/RbZOJb4UZF.lottie"
+        style="width: 300px; height: 300px;"
+        speed="1"
+        autoplay
+        loop
+      ></dotlottie-wc>
     </div>
+
   </div>
 </section>
-
 
 <section class="slide slide--b" data-index="1" aria-label="O nama — Studio Uniq">
   <div class="slide-inner about-uniq about-uniq--split">
@@ -211,6 +226,8 @@
    
     </div>
   </main>
+
+
   <script src="script.js"></script>
 </body>
 </html>
