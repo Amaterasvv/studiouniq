@@ -10,10 +10,9 @@
     a { color: inherit; text-decoration: none; }
 
 .logo {
-  height: 32px; /* mrvicu veći od default 28px */
-  width: auto;
-  filter: drop-shadow(0 0 4px rgba(255,255,255,0.5));
-}
+height: 52px;
+width: auto;}
+
 
     .loader {
       position: fixed; inset: 0; z-index: 9999;
@@ -24,6 +23,7 @@
   filter: drop-shadow(0 0 6px rgba(255,255,255,0.4)); /* lagani glow oko loga */
     }
 
+ 
     .loader.hidden { opacity: 0; pointer-events: none; }
     .spinner {
       width: 52px; height: 52px; border-radius: 999px;
@@ -47,7 +47,6 @@
     .nav-left a { padding: 10px 12px; border-radius: 10px; font-weight: 600; opacity: .8; }
     .nav-left a.active, .nav-left a:hover { background: rgba(15, 23, 42, .06); opacity: 1; }
     .nav-right { margin-left: auto; display: flex; align-items: center; gap: 10px; }
-    .logo { height: 28px; width: auto; display: block; }
 
     /* ===== Viewport + traka ===== */
     .viewport { position: fixed; inset: 64px 0 0 0; overflow: hidden; }
@@ -185,8 +184,7 @@
   display: block;
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  aspect-ratio: 4 / 3; /* lijepi omjer; makni ako želiš auto */
+  object-fit: cover; /* popuni okvir i odreži višak */
   transform: scale(1.02);
   transition: transform .6s ease;
 }
@@ -300,6 +298,50 @@
 .projects-cta {
   margin-top: 26px;
 }
+/* Lightbox */
+.lightbox {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.9);
+  display: none;
+  align-items: center; justify-content: center;
+  z-index: 9999;
+}
+.lightbox.open { display: flex; }
+
+.lightbox-img {
+  max-width: 92vw; max-height: 84vh;
+  border-radius: 14px;
+  box-shadow: 0 20px 60px rgba(0,0,0,.5);
+}
+
+.lightbox-header {
+  position: absolute; top: 18px; left: 22px; right: 22px;
+  display: flex; align-items: center; justify-content: space-between;
+  color: white; font-weight: 600; letter-spacing: .02em;
+}
+.lightbox-close {
+  border: 0; background: rgba(255,255,255,.1); color: #fff;
+  padding: 8px 12px; border-radius: 10px; cursor: pointer;
+}
+
+.lightbox-nav {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: space-between;
+  pointer-events: none;
+}
+.lb-btn {
+  pointer-events: all;
+  width: 56px; height: 56px; border-radius: 999px;
+  border: 0; background: rgba(255,255,255,.12); color: #fff;
+  cursor: pointer; margin: 0 14px; font-size: 20px;
+}
+.lb-btn:hover { background: rgba(255,255,255,.18); }
+
+@media (max-width: 640px) {
+  .lb-btn { width: 44px; height: 44px; font-size: 18px; }
+  .lightbox-header { font-size: 14px; }
+}
+
 
 /* Blagi topli pastel za kontakt */
 .slide--e {
@@ -371,7 +413,7 @@
   .navbar { height: 56px; padding: 0 12px; }
   .viewport { inset: 56px 0 0 0; }
 
-  .logo { height: 26px; } /* smanji mrvicu */
+  .logo { height: 56px; } /* smanji mrvicu */
   .nav-left {
     gap: 8px;
     overflow-x: auto;          /* ako linkova ima puno */

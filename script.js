@@ -13,7 +13,7 @@
       const loader = document.getElementById('loader');
 
   // 1) Parametri
-const SCROLL_SENSITIVITY = 3.0;  // ok je
+const SCROLL_SENSITIVITY = 2.0;  // ok je
 const SMOOTHING = 0.06;          // niže = dulje klizi prema targetu
 const FRICTION = 0.965;          // bliže 1 = dulje klizi
 const MAX_SPEED = 80;            // dopuštamo malo veću brzinu
@@ -162,3 +162,103 @@ velocity += e.deltaY * SCROLL_SENSITIVITY * 0.09;
       rafId = requestAnimationFrame(animate);
       window.addEventListener('load', () => setTimeout(hideLoader, 400));
     })();
+
+
+
+
+
+    
+(function () {
+  const grid = document.querySelector('.projects-grid');
+  if (!grid) return;
+
+  // kreiraj lightbox element jednom
+  const lb = document.createElement('div');
+  lb.className = 'lightbox';
+  lb.innerHTML = `
+    <div class="lightbox-header">
+      <div class="lb-title"></div>
+      <button class="lightbox-close" aria-label="Zatvori">Zatvori ✕</button>
+    </div>
+    <div class="lightbox-nav">
+      <button class="lb-btn lb-prev" aria-label="Prethodna">‹</button>
+      <button class="lb-btn lb-next" aria-label="Sljedeća">›</button>
+    </div>
+    <img class="lightbox-img" alt="">
+  `;
+  document.body.appendChild(lb);
+
+  const imgEl = lb.querySelector('.lightbox-img');
+  const titleEl = lb.querySelector('.lb-title');
+  const btnPrev = lb.querySelector('.lb-prev');
+  const btnNext = lb.querySelector('.lb-next');
+  const btnClose = lb.querySelector('.lightbox-close');
+
+  let images = [];
+  let idx = 0;
+
+  function show(i) {
+    idx = (i + images.length) % images.length;
+    imgEl.src = images[idx];
+  }
+
+  function open(imagesArr, title, startIndex = 0) {
+    images = imagesArr;
+    titleEl.textContent = title || '';
+    show(startIndex);
+    lb.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function close() {
+    lb.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  // klik na karticu -> otvori galeriju
+  grid.addEventListener('click', (e) => {
+    const card = e.target.closest('.project-card');
+    if (!card) return;
+
+    const imgs = (card.getAttribute('data-images') || '')
+      .split('|')
+      .map(s => s.trim())
+      .filter(Boolean);
+    if (!imgs.length) return;
+
+    const title = card.getAttribute('data-title') || '';
+    const cover = card.querySelector('img')?.src;
+    const startAt = cover ? Math.max(0, imgs.findIndex(u => u.includes('w=1600') ? u.replace('w=1600','w=800')===cover : false)) : 0;
+
+    open(imgs, title, startAt >= 0 ? startAt : 0);
+  });
+
+  // kontrole
+  btnPrev.addEventListener('click', () => show(idx - 1));
+  btnNext.addEventListener('click', () => show(idx + 1));
+  btnClose.addEventListener('click', close);
+
+  // zatvaranje klikom po pozadini (ne po slici)
+  lb.addEventListener('click', (e) => {
+    if (e.target === lb) close();
+  });
+
+  // tipkovnica
+  window.addEventListener('keydown', (e) => {
+    if (!lb.classList.contains('open')) return;
+    if (e.key === 'Escape') close();
+    if (e.key === 'ArrowRight') show(idx + 1);
+    if (e.key === 'ArrowLeft')  show(idx - 1);
+  });
+
+  // touch swipe
+  let sx = 0, sy = 0, dragging = false;
+  lb.addEventListener('pointerdown', (e) => { dragging = true; sx = e.clientX; sy = e.clientY; });
+  lb.addEventListener('pointerup',   (e) => {
+    if (!dragging) return; dragging = false;
+    const dx = e.clientX - sx, dy = e.clientY - sy;
+    if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 30) {
+      if (dx < 0) show(idx + 1); else show(idx - 1);
+    }
+  });
+})();

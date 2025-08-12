@@ -18,7 +18,7 @@
   
   <div class="loader" id="loader">
     <div style="display:flex;flex-direction:column;align-items:center;gap:10px;">
-      <img src="logo.png" alt="Logo" style="height:32px;width:auto;filter: drop-shadow(0 1px 0 rgba(0,0,0,.2));" />
+      <img src="slike/logo.png" alt="Logo" style="height:32px;width:auto;filter: drop-shadow(0 1px 0 rgba(0,0,0,.2));" />
       <div class="spinner" aria-hidden="true"></div>
       <div style="opacity:.8;font-size:13px;letter-spacing:.04em;">Učitavanje…</div>
     </div>
@@ -36,7 +36,7 @@
       </nav>
       <div class="nav-right">
         <a href="#" id="logoLink" aria-label="Početak">
-          <img class="logo" src="logo.png" alt="Logo" />
+          <img class="logo" src="slike/logo.png" alt="Logo" />
         </a>
       </div>
     </div>
@@ -106,7 +106,7 @@
 
     <div class="about-media">
       <!-- zamijeni src svojom slikom interijera -->
-      <img src="blank-picture-frame-by-reading-coffee-table-living-room.jpg"
+      <img class="aboutpic" src="slike/blank-picture-frame-by-reading-coffee-table-living-room.jpg"
            alt="Studio Uniq — primjer interijera" loading="lazy" />
     </div>
   </div>
@@ -154,23 +154,33 @@
       Od modernih stanova do luksuznih poslovnih prostora — odabrani projekti.
     </p>
 
-    <div class="projects-grid">
-      <div class="project-card">
-        <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=800" alt="Stan u Zagrebu — dnevni boravak" />
-        <h3>Stan u Zagrebu</h3>
-        <span class="project-location">Dnevni boravak i kuhinja</span>
-      </div>
-      <div class="project-card">
-        <img src="https://images.unsplash.com/photo-1595526114035-0d45ed16cf1b?q=80&w=800" alt="Uredski prostor — minimalistički dizajn" />
-        <h3>Uredski prostor</h3>
-        <span class="project-location">Minimalistički dizajn</span>
-      </div>
-      <div class="project-card">
-        <img src="https://images.unsplash.com/photo-1616627452238-9e6f6cbbe98b?q=80&w=800" alt="Apartman na moru — mediteranski stil" />
-        <h3>Apartman na moru</h3>
-        <span class="project-location">Mediteranski stil</span>
-      </div>
-    </div>
+<div class="projects-grid">
+  <div class="project-card"
+     data-title="Stan u Zagrebu"
+     data-images="slike/stan1.jpg|slike/stan2.jpg|slike/tsan2.jpg">
+  <img src="slike/stanzg.jpg" alt="Stan u Zagrebu — dnevni boravak" />
+  <h3>Stan u Zagrebu</h3>
+  <span class="project-location">Dnevni boravak i kuhinja</span>
+</div>
+
+
+  <div class="project-card"
+       data-title="Uredski prostor"
+       data-images="img/ured1.jpg|img/ured2.jpg|img/ured3.jpg">
+    <img src="slike/ured.jpg" alt="Uredski prostor — minimalistički dizajn" />
+    <h3>Uredski prostor</h3>
+    <span class="project-location">Minimalistički dizajn</span>
+  </div>
+
+  <div class="project-card"
+       data-title="Apartman na moru"
+       data-images="img/apartman1.jpg|img/apartman2.jpg|img/apartman3.jpg">
+    <img src="slike/more.jpg" alt="Apartman na moru — mediteranski stil" />
+    <h3>Apartman na moru</h3>
+    <span class="project-location">Mediteranski stil</span>
+  </div>
+</div>
+
 
     <div class="projects-cta">
       <a class="btn" href="#" data-target="4">Kontaktiraj nas</a>
@@ -208,21 +218,21 @@
       <!-- Kontakt info -->
       <div class="contact-info">
         <h3>Podaci</h3>
-        <p><strong>Studio Uniq</strong><br> Ulica Primjera 10, Zagreb</p>
-        <p><a href="tel:+38512345678">+385 1 234 5678</a><br>
+        <p><strong>Studio Uniq</strong><br> Ilica 10, Zagreb</p>
+        <p><a href="tel:+38512345678">+385 99 695 1243</a><br>
            <a href="mailto:info@studiouniq.hr">info@studiouniq.hr</a></p>
 
         <h3>Pratite nas</h3>
         <p>
-          <a href="#">Instagram</a> ·
-          <a href="#">Facebook</a> ·
-          <a href="#">Pinterest</a>
+          <a href="https://www.instagram.com/kodeblackhr/">Instagram</a> ·
+          <a href="https://www.instagram.com/kodeblackhr/">Facebook</a> ·
+          <a href="https://www.instagram.com/kodeblackhr/">Pinterest</a>
         </p>
       </div>
     </div>
   </div>
 </section>
-
+ 
    
     </div>
   </main>
