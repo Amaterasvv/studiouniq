@@ -48,6 +48,66 @@ width: auto;}
     .nav-left a.active, .nav-left a:hover { background: rgba(15, 23, 42, .06); opacity: 1; }
     .nav-right { margin-left: auto; display: flex; align-items: center; gap: 10px; }
 
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.hamburger span {
+  width: 24px;
+  height: 3px;
+  background: #0f172a;
+  border-radius: 2px;
+}
+/* Na mobitelima prikaži hamburger, sakrij meni */
+@media (max-width: 768px) {
+  .hamburger {
+    display: flex;
+     
+  }
+
+  .nav-left {
+    position: absolute;
+    top: 64px;
+    left: 0;
+    right: 0;
+    background: white;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 20px;
+    gap: 10px;
+    transform: translateY(-100%);
+    opacity: 0;
+    pointer-events: none;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    border-bottom: 1px solid rgba(15, 23, 42, .07);
+  }
+
+  /* kad je aktivno */
+  .nav-left.active {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
+/* Efekt "X" kad je otvoreno */
+.hamburger.open span:nth-child(1) {
+  transform: rotate(45deg) translateY(7px);
+}
+.hamburger.open span:nth-child(2) {
+  opacity: 0;
+}
+.hamburger.open span:nth-child(3) {
+  transform: rotate(-45deg) translateY(-7px);
+}
+
+
+
     /* ===== Viewport + traka ===== */
     .viewport { position: fixed; inset: 64px 0 0 0; overflow: hidden; }
     .slides {
@@ -63,7 +123,38 @@ width: auto;}
     .slide-inner { width: min(1100px, 90vw); }
     .tag { display: inline-block; padding: 6px 10px; border-radius: 999px; font-size: 12px; letter-spacing: .04em;
       color: #0b1020; background: #e2e8f0; margin-bottom: 16px; }
-    .title { font-size: clamp(28px, 6vw, 56px); line-height: 1.04; margin: 0 0 12px; }
+.title {
+  font-size: clamp(28px, 6vw, 56px);
+  line-height: 1.04;
+  margin: 0 0 12px;
+  display: inline-block;
+}
+
+.title span {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(20px);
+  filter: blur(4px);
+}
+
+.title.animate span {
+  animation: fadeUp 0.4s forwards;
+  animation-delay: calc(var(--char-index) * 0.05s);
+}
+
+@keyframes fadeUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+
+/* dodatni mali delay između slova */
+.title.animate span {
+  animation-delay: calc(var(--char-index) * 0.05s);
+}
     .lead  { font-size: clamp(16px, 2.4vw, 20px); opacity: .75; margin: 0 0 28px; }
     .cta   { display: inline-block; padding: 12px 18px; border-radius: 14px; background: #0b1020; color: white; font-weight: 700; }
 
@@ -400,8 +491,16 @@ width: auto;}
 }
 
 @media (max-width: 900px) {
-  .title { font-size: clamp(26px, 5.2vw, 40px); }
-  .lead  { font-size: clamp(15px, 2.6vw, 18px); }
+  .title {
+    font-size: clamp(28px, 7vw, 44px);
+    line-height: 1.15;
+    text-align: center;
+  }
+  .lead {
+    text-align: center;
+    font-size: clamp(15px, 4.5vw, 18px);
+    margin-bottom: 20px;
+  }
   .btn   { padding: 12px 16px; }
 }
 
@@ -470,4 +569,123 @@ width: auto;}
 @media (max-width: 640px) {
   .tag { font-size: 11px; }
   .scroll-cue { font-size: 13px; margin-top: 16px; }
+}
+
+
+@media (max-width: 900px) {
+  .slides {
+    flex-direction: column;
+    height: auto;
+    transform: none !important;
+  }
+  .slide {
+    min-width: 100%;
+    height: auto;
+    padding: 60px 0; /* malo zraka između sekcija */
+  }
+  .viewport {
+    position: relative;
+    inset: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: auto;
+  }
+}
+@media (max-width: 900px) {
+  body {
+    overflow: auto; /* ili overflow-y: auto; */
+  }
+}
+/* ========= FINAL MOBILE OVERRIDES (<=900px) ========= */
+@media (max-width: 900px) {
+  /* 0) Globalno: omogući normalni scroll i smanji širinu teksta */
+  body { overflow: auto; }
+  .slide-inner { width: min(720px, 92vw); }
+
+  /* 1) Viewport: ne koristi fixed inset; dodaj prostor za navbar */
+  .viewport {
+    position: relative;
+    inset: 0;
+    padding-top: 56px;     /* visina mobile navbara */
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: auto;
+  }
+
+  /* 2) Slajdovi idu ispod sebe i imaju više zraka */
+  .slides { flex-direction: column; height: auto; transform: none !important; }
+  .slide  { min-width: 100%; height: auto; padding: 48px 20px; }
+
+  /* 3) Naslovi i paragrafi: veći, čišći, bez ružnog lomljenja */
+  .title {
+    font-size: clamp(28px, 7.2vw, 42px);
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    text-align: center;
+    max-width: 22ch;         /* lijepa mjera naslova */
+    margin-left: auto;
+    margin-right: auto;
+    text-wrap: balance;      /* moderni balans redaka (gdje je podržano) */
+    word-break: normal;      /* ne cijepaj riječi nasilu */
+    hyphens: auto;           /* radije pravilno prelomiti riječ s crticom */
+  }
+  .lead {
+    text-align: center;
+    font-size: clamp(15px, 4.5vw, 18px);
+    max-width: 36ch;
+    margin: 0 auto 22px;
+  }
+
+  /* 4) HERO (prvi slajd): tekst gore, animacija ispod, centrirano */
+  .hero-uniq--split {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    text-align: center;
+  }
+  .hero-text { order: 1; padding-top: 6px; }
+  .hero-animation { order: 2; display: flex; justify-content: center; }
+  .hero-cta { justify-content: center; flex-wrap: wrap; gap: 10px; }
+
+  /* 5) CTA u stupac na manjim širinama */
+  .btn { padding: 12px 16px; }
+}
+
+@media (max-width: 700px) {
+  .hero-cta,
+  .about-cta {
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+}
+
+/* 6) O NAMA (drugi slajd): fotka iznad, pravilne proporcije, bolji tekst */
+@media (max-width: 900px) {
+  .about-uniq--split { grid-template-columns: 1fr; }
+  .about-media { order: -1; border-radius: 14px; overflow: hidden; }
+  .about-media img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    transform: none;        /* bez dodatnog scale-a na mobitelu */
+  }
+  .about-copy { text-align: center; }
+  .about-list {
+    text-align: left;
+    display: inline-block;  /* lijepo poravnanje točkica ispod teksta */
+    margin: 16px auto 0;
+  }
+}
+
+/* 7) Navbar + hamburger: zadrži visinu navbara i pad viewport-a */
+@media (max-width: 640px) {
+  .navbar { height: 56px; padding: 0 12px; }
+  .viewport { padding-top: 56px; } /* sigurnosno ako 640px breakpoint */
+  .nav-left a { padding: 8px 10px; font-size: 14px; }
+}
+
+/* 8) Sitno: scroll indicator manje agresivan na mobu */
+@media (max-width: 900px) {
+  .scroll-cue { margin-top: 14px; opacity: .6; font-size: 13px; }
 }
