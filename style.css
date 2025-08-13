@@ -232,12 +232,7 @@ width: auto;}
 }
 .btn--ghost:hover { background: rgba(255,255,255,0.06); }
 
-/* suptilni hint za scroll */
-.scroll-cue {
-  display: inline-flex; align-items: center; gap: 8px;
-  margin-top: 22px; opacity: .7; font-size: 14px;
-  animation: cueFloat 2.2s ease-in-out infinite;
-}
+
 @keyframes cueFloat {
   0%,100% { transform: translateX(0); }
   50%     { transform: translateX(6px); }
@@ -565,11 +560,6 @@ width: auto;}
   .btn { width: 100%; text-align: center; }   /* lakše pogoditi na mobitelu */
 }
 
-/* ====== Sitnice ====== */
-@media (max-width: 640px) {
-  .tag { font-size: 11px; }
-  .scroll-cue { font-size: 13px; margin-top: 16px; }
-}
 
 
 @media (max-width: 900px) {
@@ -685,7 +675,51 @@ width: auto;}
   .nav-left a { padding: 8px 10px; font-size: 14px; }
 }
 
-/* 8) Sitno: scroll indicator manje agresivan na mobu */
+/* --- Scroll cue: bazni izgled --- */
+.scroll-cue {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 22px;
+  opacity: .7;
+  font-size: 14px;
+  animation: cueFloatX 2.2s ease-in-out infinite; /* desktop default */
+}
+
+/* Tekst po defaultu (desktop) */
+.scroll-cue .cue-label::before {
+  content: "skrolaj desno";
+}
+
+/* Strelica po defaultu (desktop) */
+.scroll-cue svg {
+  transform: none;
+  transform-origin: 50% 50%;
+  transition: transform .3s ease;
+}
+
+/* Keyframes */
+@keyframes cueFloatX {
+  0%,100% { transform: translateX(0); }
+  50%     { transform: translateX(6px); }
+}
+@keyframes cueFloatY {
+  0%,100% { transform: translateY(0); }
+  50%     { transform: translateY(6px); }
+}
+
+/* --- Mobile override (≤900px) --- */
 @media (max-width: 900px) {
-  .scroll-cue { margin-top: 14px; opacity: .6; font-size: 13px; }
+  .scroll-cue { 
+    animation: cueFloatY 1.9s ease-in-out infinite;
+    margin-top: 14px;
+    opacity: .6;
+    font-size: 13px;
+  }
+  .scroll-cue .cue-label::before {
+    content: "skrolaj dolje";
+  }
+  .scroll-cue svg {
+    transform: rotate(90deg); /* desno -> dolje */
+  }
 }
