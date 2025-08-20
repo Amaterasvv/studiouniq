@@ -122,39 +122,26 @@ width: auto;}
     }
     .slide-inner { width: min(1100px, 90vw); }
     .tag { display: inline-block; padding: 6px 10px; border-radius: 999px; font-size: 12px; letter-spacing: .04em;
-      color: #0b1020; background: #e2e8f0; margin-bottom: 16px; }
-.title {
+      color: #0b1020; background: #e2e8f0; margin-bottom: 16px; }/* Naslov – bez lomljenja, samo fade+lift cijelog elementa */
+.title{
   font-size: clamp(28px, 6vw, 56px);
-  line-height: 1.04;
+  line-height: 1.1;
   margin: 0 0 12px;
-  display: inline-block;
-}
-
-.title span {
-  display: inline-block;
+  text-wrap: balance;     /* ljepši prijelomi redaka */
+  word-break: normal;
+  hyphens: auto;
   opacity: 0;
-  transform: translateY(20px);
-  filter: blur(4px);
+  transform: translateY(12px);
+  filter: blur(2px);
+  will-change: transform, opacity;
+}
+.title.animate{
+  animation: titleFadeUp .45s ease-out forwards;
+}
+@keyframes titleFadeUp{
+  to { opacity: 1; transform: none; filter: blur(0); }
 }
 
-.title.animate span {
-  animation: fadeUp 0.4s forwards;
-  animation-delay: calc(var(--char-index) * 0.05s);
-}
-
-@keyframes fadeUp {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-    filter: blur(0);
-  }
-}
-
-
-/* dodatni mali delay između slova */
-.title.animate span {
-  animation-delay: calc(var(--char-index) * 0.05s);
-}
     .lead  { font-size: clamp(16px, 2.4vw, 20px); opacity: .75; margin: 0 0 28px; }
     .cta   { display: inline-block; padding: 12px 18px; border-radius: 14px; background: #0b1020; color: white; font-weight: 700; }
 
@@ -278,6 +265,44 @@ width: auto;}
 
 .about-cta { display: flex; gap: 12px; flex-wrap: wrap; }
 
+/* === ABOUT / MOBILE v2 — stabilan kadar + bolji fokus === */
+.about-uniq--split > * { min-width: 0; } /* safety za grid */
+
+@media (max-width: 900px){
+  /* 1) Stabilan, malo viši kadar na mobitelu */
+  .about-media{
+    border-radius: 14px;
+    overflow: hidden;
+    aspect-ratio: 5 / 4;        /* viši kadar (probaj 4/3 ili 16/10 po ukusu) */
+  }
+
+  /* 2) Slika popunjava okvir i fokus pomaknut niže */
+  .about-media img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 65%;   /* ↓ pomakni fokus (50% 70% = još niže) */
+    transform: none;            /* bez scale na mobitelu */
+  }
+}
+
+/* ultra uski ekrani: još mrvu viši kadar */
+@media (max-width: 520px){
+  .about-media{ aspect-ratio: 4 / 3; }
+  .about-media img{ object-position: 50% 68%; }
+}
+
+/* fallback za stare preglednike bez aspect-ratio */
+@supports not (aspect-ratio: 1 / 1){
+  @media (max-width: 900px){
+    .about-media{ position: relative; }
+    .about-media::before{ content:""; display:block; padding-top: 80%; } /* ~5/4 */
+    .about-media > img{
+      position:absolute; inset:0; width:100%; height:100%;
+      object-fit:cover; object-position:50% 65%; transform:none;
+    }
+  }
+}
 
 /* Blagi pastel background za usluge */
 .slide--c {
@@ -723,3 +748,18 @@ width: auto;}
     transform: rotate(90deg); /* desno -> dolje */
   }
 }
+/* LOADER: veći logo + čišći look */
+#loader img { 
+  height: clamp(120px, 28vw, 220px) !important; 
+  width: auto !important;
+  filter: drop-shadow(0 6px 24px rgba(0,0,0,.35));
+}
+#loader .spinner { margin-top: 16px; }
+.kb-badge{
+  position: fixed; right: 12px; bottom: 12px; z-index: 60;
+  padding: 8px 10px; border-radius: 999px;
+  background: rgba(15,23,42,.85); color:#fff; border:1px solid rgba(255,255,255,.12);
+  font: 600 11px/1.1 system-ui; letter-spacing:.08em; text-transform:uppercase;
+  backdrop-filter: blur(8px); opacity:.85; transition: transform .2s ease, opacity .2s ease;
+}
+.kb-badge:hover{ opacity:1; transform: translateY(-1px); }

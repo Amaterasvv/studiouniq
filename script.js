@@ -126,26 +126,20 @@ if (!isMobile) {
   if (viewport) { viewport.style.overflowY = 'auto'; viewport.style.overflowX = 'hidden'; }
 }
 
-/* 2) Falling letters (uvijek) */
+/* Titles: jednostavan fade-up bez splitanja */
 (() => {
   const titles = document.querySelectorAll('.title');
-  titles.forEach(title => {
-    const text = title.textContent;
-    title.textContent = '';
-    [...text].forEach((ch, i) => {
-      const span = document.createElement('span');
-      span.textContent = ch === ' ' ? '\u00A0' : ch;
-      span.style.setProperty('--char-index', i);
-      title.appendChild(span);
-    });
-  });
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) { entry.target.classList.add('animate'); observer.unobserve(entry.target); }
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(en => {
+      if (en.isIntersecting) {
+        en.target.classList.add('animate');
+        io.unobserve(en.target);
+      }
     });
   }, { threshold: 0.3 });
-  titles.forEach(t => observer.observe(t));
+  titles.forEach(t => io.observe(t));
 })();
+
 /* ===============================
    3) Lightbox (uvijek radi)
    =============================== */
